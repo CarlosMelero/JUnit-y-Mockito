@@ -61,14 +61,23 @@ public class TablonDeAnunciosTest {
 
 	@Test
 	public void test5() {
-		TablonDeAnuncios TDA = mock(TablonDeAnuncios.class);
-		IBaseDeDatosDePagos pagos = mock(IBaseDeDatosDePagos.class);
-		IBaseDeDatosDeAnunciantes anunciantes = mock(IBaseDeDatosDeAnunciantes.class);
-		Anuncio A = new Anuncio(" ", " ", "LA EMPRESA");
-		Anuncio B = new Anuncio("titulo", " ", "LA EMPRESA");
-		TDA.publicarAnuncio(A, anunciantes, pagos);
-		TDA.publicarAnuncio(B, anunciantes, pagos);
-		verify(TDA).buscarAnuncioPorTitulo(B.titulo_);
-		assertEquals(2, TDA.anunciosPublicados());
+		Anuncio A=new Anuncio("Prueba1","AnuncioEmpresa1","LA EMPRESA");
+		Anuncio B=new Anuncio("Prueba2","AnuncioEmpresa2","LA EMPRESA");
+		TDA.publicarAnuncio(A, null,null);
+		TDA.publicarAnuncio(B, null,null);
+		int publicados=TDA.anunciosPublicados();
+		TDA.buscarAnuncioPorTitulo("Prueba2");
+		assertEquals(TDA.anunciosPublicados(),publicados);
+	}
+	
+	@Test
+	public void test6(){
+		Anuncio A=new Anuncio("Prueba","AnuncioEmpresa","LA EMPRESA");
+		Anuncio B=new Anuncio("Prueba2","AnuncioEmpresa2","LA EMPRESA");
+		TDA.publicarAnuncio(A, null,null);
+		TDA.publicarAnuncio(B, null,null);
+		TDA.borrarAnuncio("Prueba", "LA EMPRESA");
+		Anuncio nulo=TDA.buscarAnuncioPorTitulo("Prueba");
+		assertNull(nulo);
 	}
 }
