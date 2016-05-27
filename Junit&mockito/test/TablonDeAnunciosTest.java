@@ -1,6 +1,5 @@
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import org.junit.After;
 import org.junit.Before;
@@ -48,4 +47,15 @@ public class TablonDeAnunciosTest {
 
 	}
 
+	@Test
+	public void test4() {
+		IBaseDeDatosDePagos pagos = mock(IBaseDeDatosDePagos.class);
+		IBaseDeDatosDeAnunciantes anunciantes = mock(IBaseDeDatosDeAnunciantes.class);
+		when(anunciantes.buscarAnunciante("Carlos")).thenReturn(true);
+		when(pagos.anuncianteTieneSaldo("Carlos")).thenReturn(true);
+		Anuncio A = new Anuncio(" ", " ", "Carlos");
+		TDA.publicarAnuncio(A, anunciantes, pagos);
+		verify(pagos).anuncioPublicado("Carlos");
+
+	}
 }
