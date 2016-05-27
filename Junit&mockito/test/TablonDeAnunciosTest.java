@@ -1,4 +1,4 @@
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.After;
@@ -43,7 +43,7 @@ public class TablonDeAnunciosTest {
 		when(pagos.anuncianteTieneSaldo("Carlos")).thenReturn(false);
 		Anuncio A = new Anuncio(" ", " ", "Carlos");
 		TDA.publicarAnuncio(A, anunciantes, pagos);
-		assertEquals(TDA.anunciosPublicados(), 1);
+		assertEquals(1, TDA.anunciosPublicados());
 
 	}
 
@@ -57,5 +57,18 @@ public class TablonDeAnunciosTest {
 		TDA.publicarAnuncio(A, anunciantes, pagos);
 		verify(pagos).anuncioPublicado("Carlos");
 
+	}
+
+	@Test
+	public void test5() {
+		TablonDeAnuncios TDA = mock(TablonDeAnuncios.class);
+		IBaseDeDatosDePagos pagos = mock(IBaseDeDatosDePagos.class);
+		IBaseDeDatosDeAnunciantes anunciantes = mock(IBaseDeDatosDeAnunciantes.class);
+		Anuncio A = new Anuncio(" ", " ", "LA EMPRESA");
+		Anuncio B = new Anuncio("titulo", " ", "LA EMPRESA");
+		TDA.publicarAnuncio(A, anunciantes, pagos);
+		TDA.publicarAnuncio(B, anunciantes, pagos);
+		verify(TDA).buscarAnuncioPorTitulo(B.titulo_);
+		assertEquals(2, TDA.anunciosPublicados());
 	}
 }
